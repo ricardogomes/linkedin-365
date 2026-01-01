@@ -1,0 +1,12 @@
+[project]
+name = "linkedin-365"
+version = "0.1.0"
+description = "Generate branded images for a 365-day LinkedIn posting challenge"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pillow>=10.0.0",
+]
+
+[project.scripts]
+generate = "generate:main"
