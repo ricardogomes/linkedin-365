@@ -30,6 +30,10 @@ TOPICS = {
         "color": "#10B981",  # Green
         "label": "Cryptography",
     },
+    "ai": {
+        "color": "#06B6D4",  # Cyan
+        "label": "Artificial Intelligence",
+    },
     "general": {
         "color": "#8B5CF6",  # Purple
         "label": "General",
