@@ -10,7 +10,9 @@ This project is itself an experiment in fully AI-driven development with human o
 
 ### Development Principles
 
-1. **Human-at-the-helm**: AI proposes, human decides. All significant changes require explicit approval before implementation.
+1. **Human-at-the-helm, not human-in-the-loop**: Direction is set through documentation (CLAUDE.md, specs, backlog). The agent executes autonomously against those specifications. Feedback and course-correction happen between runs, not during execution. No approval gates or step-by-step intervention during implementation.
+
+   The documentation IS the steering mechanism. If output isn't adequate, the response is to refine documentation and run again—not to add control checkpoints during execution.
 
 2. **Documented process**: Decisions and learnings are tracked in the repository. The git history tells the story of how features evolved.
 
