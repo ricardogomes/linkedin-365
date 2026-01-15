@@ -2,7 +2,21 @@
 
 ## Project Overview
 
-This is a Python tool that generates consistent, branded images for a 365-day LinkedIn posting challenge. The goal is to post daily about cybersecurity, blockchain, and cryptography topics throughout 2026.
+This is a Python tool that generates consistent, branded images for a 365-day LinkedIn posting challenge. The goal is to post daily about cybersecurity, blockchain, cryptography, and AI topics throughout 2026.
+
+## Meta-Purpose: AI-Driven Development Experiment
+
+This project is itself an experiment in fully AI-driven development with human oversight. The process of building it is as important as the output.
+
+### Development Principles
+
+1. **Human-at-the-helm**: AI proposes, human decides. All significant changes require explicit approval before implementation.
+
+2. **Documented process**: Decisions and learnings are tracked in the repository. The git history tells the story of how features evolved.
+
+3. **Iterative quality**: Best practices in development, testing, deployment, and security are applied incrementally. We don't over-engineer upfront, but we don't skip fundamentals either.
+
+4. **Learning over shipping**: Experimenting with approaches and understanding trade-offs matters more than velocity. This is a learning laboratory, not a production sprint.
 
 ## Purpose
 
@@ -23,12 +37,37 @@ linkedin-365/
 └── output/              # Generated images (gitignored)
 ```
 
+## Current State
+
+The tool is functional and generates high-quality images. Core capabilities:
+
+- **Image generation**: Single-image CLI with day, topic, optional date and output path
+- **Five topic categories**: cybersecurity (blue), blockchain (orange), cryptography (green), ai (cyan), general (purple)
+- **Format**: 1200x627 landscape (LinkedIn optimized)
+- **Visual elements**: Day counter, progress bar, topic pill, date display
+- **Configuration**: Separated into `config.py` for easy customization
+- **Font handling**: System font fallback (DejaVu Sans on Linux, Helvetica on macOS, Arial on Windows)
+- **Dependencies**: Minimal (Python 3.8+, Pillow), managed via uv
+
+## Code Conventions
+
+Patterns observed in the codebase:
+
+- **Separation of concerns**: Configuration (`config.py`) separate from logic (`generate.py`)
+- **Type hints**: Function signatures use type annotations
+- **Docstrings**: Functions include docstring documentation
+- **Error handling**: ValueError for invalid inputs with descriptive messages
+- **Path management**: Using pathlib.Path for cross-platform compatibility
+- **CLI**: argparse with help text and examples
+- **Output**: Clear success/error messages with emoji for visual feedback
+
 ## Key Design Decisions
 
 1. **Dark background**: Tech aesthetic, easy on eyes, stands out in LinkedIn feed
-2. **Color-coded topics**: Blue (cybersecurity), Orange (blockchain), Green (cryptography), Purple (general)
+2. **Color-coded topics**: Instantly recognizable categories with distinct colors
 3. **Minimal design**: Day counter, progress bar, topic pill, date - nothing more
 4. **No personal branding**: Focus is on content, not the person
+5. **Landscape format**: LinkedIn's recommended 1200x627 dimensions for optimal display
 
 ## Usage
 
@@ -47,6 +86,7 @@ python generate.py 100 blockchain -o custom_name.png
 - `cybersecurity` - Blue (#3B82F6)
 - `blockchain` - Orange (#F59E0B)
 - `cryptography` - Green (#10B981)
+- `ai` - Cyan (#06B6D4)
 - `general` - Purple (#8B5CF6)
 
 ## Potential Improvements
