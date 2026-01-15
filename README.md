@@ -8,6 +8,8 @@ A Python tool to generate consistent, branded images for a 365-day LinkedIn post
 
 - 🎨 **Color-coded topics** - Instantly recognizable categories
 - 📊 **Progress tracking** - Visual progress bar that fills throughout the year
+- 📱 **Multiple aspect ratios** - Landscape (1200x627) for LinkedIn, Portrait (1080x1350) for Instagram
+- 🗓️ **Smart date handling** - Automatically calculates day number from date
 - 🌙 **Dark theme** - Modern, tech-focused aesthetic
 - ⚙️ **Configurable** - Easy to customize colors, fonts, and layout
 - 🚀 **Simple CLI** - Generate images with a single command
@@ -18,31 +20,35 @@ A Python tool to generate consistent, branded images for a 365-day LinkedIn post
 # Install dependencies
 uv sync
 
-# Generate your first image
-uv run python generate.py 1 general --date "January 1, 2026"
+# Generate an image with today's date (automatically calculates day number)
+uv run python generate.py general
+
+# Or specify a date
+uv run python generate.py cybersecurity --date "January 15, 2026"
 ```
 
 Or without uv:
 
 ```bash
 pip install -r requirements.txt
-python generate.py 1 general --date "January 1, 2026"
+python generate.py general
 ```
 
 ## Usage
 
 ```bash
-python generate.py <day> <topic> [--date "Month DD, YYYY"] [--output filename.png]
+python generate.py <topic> [options]
 ```
 
 ### Arguments
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `day` | Yes | Day number (1-365) |
 | `topic` | Yes | Topic category (see below) |
-| `--date`, `-d` | No | Date to display (default: today) |
-| `--output`, `-o` | No | Output path (default: `output/day_XXX_topic.png`) |
+| `--day` | No | Day number (1-365). If not provided, calculated from date. |
+| `--date`, `-d` | No | Date to display (default: today). Used to calculate day if --day not provided. |
+| `--aspect-ratio`, `-a` | No | Image aspect ratio: `landscape` (1200x627) or `portrait` (1080x1350). Default: landscape |
+| `--output`, `-o` | No | Output path (default: `output/day_XXX_topic[_portrait].png`) |
 
 ### Topics
 
@@ -51,19 +57,26 @@ python generate.py <day> <topic> [--date "Month DD, YYYY"] [--output filename.pn
 | `cybersecurity` | 🔵 Blue | Security, hacking, vulnerabilities |
 | `blockchain` | 🟠 Orange | Blockchain, crypto, web3 |
 | `cryptography` | 🟢 Green | Encryption, protocols, math |
+| `ai` | 🔵 Cyan | Artificial intelligence, machine learning |
 | `general` | 🟣 Purple | Everything else |
 
 ### Examples
 
 ```bash
-# Day 1 kickoff post
-python generate.py 1 general --date "January 1, 2026"
+# Use today's date (automatically calculates day number)
+python generate.py general
 
-# Cybersecurity post
-python generate.py 42 cybersecurity
+# Specify a date (day number calculated automatically)
+python generate.py cybersecurity --date "January 15, 2026"
 
-# Custom output location
-python generate.py 100 blockchain -o ~/Desktop/linkedin_post.png
+# Explicit day number
+python generate.py blockchain --day 100
+
+# Generate portrait format for Instagram
+python generate.py ai --aspect-ratio portrait
+
+# Combine options
+python generate.py cryptography --day 42 --date "February 11, 2026" -a portrait -o my_post.png
 ```
 
 ## Configuration

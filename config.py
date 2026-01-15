@@ -4,6 +4,8 @@ Edit this file to customize colors, topics, and dimensions.
 """
 
 # Image dimensions (LinkedIn landscape recommended)
+# NOTE: WIDTH, HEIGHT, and LAYOUT are kept for backward compatibility
+# Use ASPECT_RATIOS for new code
 WIDTH = 1200
 HEIGHT = 627
 
@@ -63,6 +65,35 @@ LAYOUT = {
     "date_y": 0.85,           # Date position
 }
 
+# Aspect ratio configurations
+ASPECT_RATIOS = {
+    "landscape": {
+        "width": 1200,
+        "height": 627,
+        "layout": {
+            "day_counter_y": 0.26,
+            "progress_bar_y": 0.51,
+            "progress_bar_width": 800,
+            "progress_bar_height": 16,
+            "topic_pill_y": 0.67,
+            "date_y": 0.85,
+        }
+    },
+    "portrait": {
+        "width": 1080,
+        "height": 1350,
+        "layout": {
+            "day_counter_y": 0.20,
+            "progress_bar_y": 0.45,
+            "progress_bar_width": 700,
+            "progress_bar_height": 16,
+            "topic_pill_y": 0.65,
+            "date_y": 0.88,
+        }
+    }
+}
+
 # Challenge settings
 TOTAL_DAYS = 365
 YEAR = 2026
+START_DATE = "January 1, 2026"

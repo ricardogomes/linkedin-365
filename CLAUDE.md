@@ -43,11 +43,12 @@ linkedin-365/
 
 The tool is functional and generates high-quality images. Core capabilities:
 
-- **Image generation**: Single-image CLI with day, topic, optional date and output path
+- **Image generation**: Single-image CLI with topic, optional day, date, aspect ratio, and output path
 - **Five topic categories**: cybersecurity (blue), blockchain (orange), cryptography (green), ai (cyan), general (purple)
-- **Format**: 1200x627 landscape (LinkedIn optimized)
+- **Multiple aspect ratios**: 1200x627 landscape (LinkedIn) and 1080x1350 portrait (Instagram/LinkedIn)
+- **Smart date handling**: Automatically calculates day number from date (based on Jan 1, 2026 start), defaults to today
 - **Visual elements**: Day counter, progress bar, topic pill, date display
-- **Configuration**: Separated into `config.py` for easy customization
+- **Configuration**: Separated into `config.py` with aspect ratio-specific layouts
 - **Font handling**: System font fallback (DejaVu Sans on Linux, Helvetica on macOS, Arial on Windows)
 - **Dependencies**: Minimal (Python 3.8+, Pillow), managed via uv
 
@@ -69,18 +70,21 @@ Patterns observed in the codebase:
 2. **Color-coded topics**: Instantly recognizable categories with distinct colors
 3. **Minimal design**: Day counter, progress bar, topic pill, date - nothing more
 4. **No personal branding**: Focus is on content, not the person
-5. **Landscape format**: LinkedIn's recommended 1200x627 dimensions for optimal display
+5. **Multi-platform formats**: Landscape (1200x627) for LinkedIn/Twitter, Portrait (1080x1350) for Instagram
+6. **Smart defaults**: Automatically uses today's date and calculates day number for frictionless daily use
 
 ## Usage
 
 ```bash
 # Generate an image
-python generate.py <day> <topic> [--date "Month DD, YYYY"] [--output filename.png]
+python generate.py <topic> [--day N] [--date "Month DD, YYYY"] [--aspect-ratio landscape|portrait] [--output filename.png]
 
 # Examples
-python generate.py 1 general --date "January 1, 2026"
-python generate.py 42 cybersecurity
-python generate.py 100 blockchain -o custom_name.png
+python generate.py general  # Uses today's date, infers day number
+python generate.py cybersecurity --date "January 15, 2026"  # Infers day 15
+python generate.py blockchain --day 100  # Explicit day number
+python generate.py ai --aspect-ratio portrait  # Portrait format for Instagram
+python generate.py cryptography --day 42 -a portrait -o custom_name.png
 ```
 
 ## Topics
