@@ -2,44 +2,61 @@
 
 ## Next Actions
 
-These are the immediate priorities for improving the tool:
-
-### 1. Add image aspect ratio support (portrait)
-
-**Priority**: High
-**Status**: Not started
-
-Currently, the tool only generates landscape images (1200x627). Add support for Instagram/LinkedIn portrait format (1080x1350) while keeping landscape as default.
-
-See: `specs/aspect-ratio-support.md` for detailed specification.
+No immediate priorities. The core feature set is complete.
 
 ---
 
-### 2. Infer day number from date
+## Completed
+
+### 1. Add image aspect ratio support (portrait) ✓
 
 **Priority**: High
-**Status**: Not started
+**Status**: ✓ Completed (commit: 0f8d4f7)
+**Spec granularity**: Detailed
 
-Allow users to specify a date and have the tool automatically calculate which day of the 365-day challenge it represents (based on start date of January 1, 2026). Keep explicit day parameter as an override.
+Implemented portrait format (1080x1350) alongside landscape (1200x627):
+- New `--aspect-ratio` / `-a` CLI parameter (case insensitive)
+- Portrait-optimized layout with adjusted vertical spacing
+- Automatic `_portrait` suffix in default filenames
+- ASPECT_RATIOS config structure in config.py
 
-See: `specs/infer-day-from-date.md` for specification.
+**Learnings**: Detailed spec with exact parameters and edge cases made implementation straightforward. No ambiguity or back-and-forth needed.
 
 ---
 
-### 3. Default to system date
+### 2. Infer day number from date ✓
+
+**Priority**: High
+**Status**: ✓ Completed (commit: 0f8d4f7)
+**Spec granularity**: Medium
+
+Day number automatically calculated from date (based on Jan 1, 2026 start):
+- `--day` parameter is now optional
+- Calculates from `--date` if day not provided
+- Explicit `--day` overrides calculation
+- Validation: rejects dates before start or > 365 days after
+
+**Learnings**: Medium spec with clear requirements but implementation flexibility worked well. Agent made reasonable CLI design choices.
+
+---
+
+### 3. Default to system date ✓
 
 **Priority**: Medium
-**Status**: Not started
+**Status**: ✓ Completed (commit: 0f8d4f7)
+**Spec granularity**: Loose
 
-Make the date parameter optional, defaulting to today's date. Currently, if no date is provided, the tool uses today's date internally but users must always provide the day number.
+Date defaults to today for frictionless daily usage:
+- Combined with day inference: `python generate.py <topic>` generates today's image
+- Zero configuration for daily workflow
 
-See: `specs/default-system-date.md` for specification.
+**Learnings**: Loose spec (intent-only) required more interpretation but enabled creative UX design. Agent successfully combined with date inference.
 
 ---
 
 ## Open Questions
 
-### From initial code review:
+### From initial implementation:
 
 1. **Font selection**: Should we bundle a specific font to ensure consistency across platforms, or keep the system font fallback approach?
 
@@ -48,20 +65,44 @@ See: `specs/default-system-date.md` for specification.
    - Allow topic specification per day (via CSV/JSON)?
    - Generate all possible combinations for testing?
 
-3. **Validation**: Should we validate dates to ensure they're within 2026, or allow any year for flexibility?
+3. **Date validation strictness**: Current implementation rejects dates outside 2026. Should we allow any year for flexibility (e.g., generating retroactive or future content)?
 
 4. **Output format**: Should we support other formats (JPEG, WebP) or stay PNG-only?
 
-5. **Portrait layout**: For portrait format, should we use the same layout proportions, or redesign for vertical space?
+5. **Backward compatibility**: Old CLI usage `python generate.py 1 general` no longer works. Should we support it via position detection, or is documentation update sufficient?
+
+6. **Error messages**: Should date parsing support multiple formats (ISO 8601, etc.) or stay strict to "Month DD, YYYY"?
 
 ---
 
 ## Ideas for Later
 
-- Template variations (quote cards, milestone celebrations)
+### New features
+- Template variations (quote cards, milestone celebrations, achievement badges)
 - Add icon/symbol per topic category
 - Web interface for non-technical users
 - Subtle background patterns or textures
 - Custom font support with bundled fonts
 - Configuration via YAML/JSON file
 - Integration with social media APIs for auto-posting
+- Batch generation mode for date ranges
+
+### Code quality
+- Add unit tests for core functions (parse_date, calculate_day_from_date, generate_image)
+- Add integration tests for CLI
+- Type checking with mypy
+- Linting with ruff or pylint
+- Pre-commit hooks for quality checks
+
+### Developer experience
+- Add `--version` flag
+- Add `--list-topics` flag
+- Better error messages with suggestions
+- Progress indicator for batch operations
+- Dry-run mode to preview output path without generating
+
+### Distribution
+- Package for PyPI
+- Add GitHub Actions for CI/CD
+- Create releases with binaries (PyInstaller/Nuitka)
+- Docker container for consistent environments
